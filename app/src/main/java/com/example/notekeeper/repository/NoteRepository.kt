@@ -23,4 +23,8 @@ class NoteRepository(private val noteDao: NoteDao) {
     suspend fun deleteAll(){
         return noteDao.deleteAll()
     }
+
+     fun search(query:String):LiveData<List<Note>>{
+        return noteDao.search(query)
+    }
 }

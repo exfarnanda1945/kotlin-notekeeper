@@ -14,7 +14,7 @@ interface NoteDao {
     @Update()
     suspend fun update(note: Note)
 
-    @Query("DELETE FROM note_table where id = :id")
+    @Query("DELETE FROM note_table Where id = :id")
     suspend fun delete(id:String)
 
     @Query("DELETE FROM note_table")
@@ -22,4 +22,7 @@ interface NoteDao {
 
     @Query("SELECT * FROM note_table")
     fun list():LiveData<List<Note>>
+
+    @Query("SELECT * FROM note_table WHERE title LIKE :query")
+    fun search(query:String):LiveData<List<Note>>
 }

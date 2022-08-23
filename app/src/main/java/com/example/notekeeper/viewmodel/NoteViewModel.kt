@@ -45,4 +45,8 @@ class NoteViewModel(app: Application) : AndroidViewModel(app) {
             repo.deleteAll()
         }
     }
+
+    fun search(query:String):LiveData<List<Note>>{
+        return repo.search(query)
+    }
 }

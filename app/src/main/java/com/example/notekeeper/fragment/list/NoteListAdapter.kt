@@ -77,8 +77,8 @@ class NoteListAdapter : RecyclerView.Adapter<NoteListAdapter.ViewHolder>() {
     }
 
     fun setData(noteList: List<Note>) {
+
         this.noteList = noteList
-        notifyDataSetChanged()
     }
 
     private fun getColor(index: Int, ctx: Context): String {
@@ -88,7 +88,7 @@ class NoteListAdapter : RecyclerView.Adapter<NoteListAdapter.ViewHolder>() {
     }
 
     private fun getMinHeight(index:Int):Int{
-        var minHeight:Int = 300
+        var minHeight = 300
         when(index % 4){
             0 -> {
                 minHeight = 350
