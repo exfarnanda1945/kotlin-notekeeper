@@ -5,14 +5,12 @@ import android.app.DatePickerDialog
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.*
-import android.widget.DatePicker
 import android.widget.Toast
-import androidx.fragment.app.Fragment
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.get
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.notekeeper.R
@@ -50,15 +48,15 @@ class UpdateFragment : Fragment() {
 
         if(args.currentNote.isImportant){
             binding.swUpdateIsImportant.isChecked = true
-            binding.textUpdateSwitch.text = "Important"
+            binding.textUpdateSwitch.text = getString(R.string.switch_important)
             isImportant = true
         }
         binding.swUpdateIsImportant.setOnCheckedChangeListener{_,isChecked ->
                 if(isChecked){
-                    binding.textUpdateSwitch.text = "Important"
+                    binding.textUpdateSwitch.text = getString(R.string.switch_important)
                     isImportant = true
                 }else{
-                    binding.textUpdateSwitch.text = "Uninmportant"
+                    binding.textUpdateSwitch.text = getString(R.string.switch_not_important)
                     isImportant = false
                 }
         }
@@ -93,11 +91,11 @@ class UpdateFragment : Fragment() {
     }
 
     private fun initDatePicker() {
-        binding.datePickerUpdateButton.text = Utils.convertDateToString(dateValue.dayOfMonth,dateValue.monthValue,dateValue.year)
+        binding.datePickerUpdateButton.text = Utils.convertDateToString(dateValue.dayOfMonth,dateValue.monthValue,dateValue.year,requireContext())
         val dateListener:DatePickerDialog.OnDateSetListener =
-            DatePickerDialog.OnDateSetListener() { datePicker, year,month, day ->
+            DatePickerDialog.OnDateSetListener() { _, year,month, day ->
                 val monthValue  = 1 + month
-                val dateString =Utils.convertDateToString(day,monthValue,year)
+                val dateString =Utils.convertDateToString(day,monthValue,year,requireContext())
                 binding.datePickerUpdateButton.text = dateString
                 dateValue = LocalDateTime.of(LocalDate.of(year,monthValue,day), LocalTime.now())
             }
@@ -109,14 +107,10 @@ class UpdateFragment : Fragment() {
         val title = binding.edtUpdateTitle.text.toString()
         val desc = binding.edtUpdateDescription.text.toString()
         val isImportantValue= isImportant
-
-        val x = Toast.LENGTH_LONG
-        x
-
         if(validateForm(title,desc)){
             val updateValue = Note(args.currentNote.id,isImportantValue,title,desc,Converters().dateToString(dateValue))
             mNoteViewModel.update(updateValue)
-           Utils.useToast(requireContext(),"Succesfully Updated",Toast.LENGTH_LONG)
+           Utils.useToast(requireContext(),"Successfully Updated",Toast.LENGTH_LONG)
            findNavController().navigate(R.id.action_updateFragment_to_listFragment)
         }else{
             setError(title,desc)

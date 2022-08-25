@@ -29,7 +29,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="5dp"
-            android:text="Unimportant"
+            android:text="@string/switch_not_important"
             android:textSize="24sp" />
     </LinearLayout>
 
@@ -38,7 +38,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:text="Select Date:"
+        android:text="@string/select_date"
         android:textColor="@color/smooth_grey"
         android:textSize="20sp"
         app:layout_constraintHorizontal_bias="0.0"
@@ -67,7 +67,7 @@
         android:layout_marginTop="44dp"
         android:background="@drawable/custom_edit_text"
         android:ems="10"
-        android:hint="Title"
+        android:hint="@string/title"
         android:inputType="textMultiLine"
         android:maxLines="3"
         android:minLines="1"
@@ -75,7 +75,8 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/datePickerButton" />
+        app:layout_constraintTop_toBottomOf="@+id/datePickerButton"
+        android:autofillHints="" />
 
     <EditText
         android:id="@+id/edt_description"
@@ -84,17 +85,17 @@
         android:background="@drawable/custom_edit_text"
         android:ems="10"
         android:gravity="start|top"
-        android:hint="Type something here..."
+        android:hint="@string/hint_description"
         android:inputType="textMultiLine"
         android:maxLines="20"
         android:minLines="1"
-
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edt_title"
-        app:layout_constraintVertical_bias="0.124" />
+        app:layout_constraintVertical_bias="0.124"
+        android:autofillHints="" />
 
 
 

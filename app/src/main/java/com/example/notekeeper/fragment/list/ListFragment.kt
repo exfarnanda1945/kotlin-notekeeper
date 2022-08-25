@@ -3,16 +3,14 @@ package com.example.notekeeper.fragment.list
 import android.app.AlertDialog
 import android.content.res.ColorStateList
 import android.os.Bundle
-import android.text.TextUtils
 import android.util.Log
 import android.view.*
-import androidx.appcompat.widget.SearchView
 import android.widget.Toast
+import androidx.appcompat.widget.SearchView
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
@@ -96,7 +94,7 @@ class ListFragment : Fragment() {
         alertBuilder.setPositiveButton("Yes") { _, _ ->
             mNoteViewModel.deleteAll()
             Toast.makeText(
-                requireContext(), "Succesfully deleted",
+                requireContext(), "Successfully deleted",
                 Toast.LENGTH_LONG
             ).show()
         }

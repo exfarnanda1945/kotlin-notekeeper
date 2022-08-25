@@ -4,17 +4,15 @@ import android.app.AlertDialog
 import android.os.Bundle
 import android.view.*
 import android.widget.Toast
-import androidx.fragment.app.Fragment
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.example.notekeeper.MainActivity
 import com.example.notekeeper.R
 import com.example.notekeeper.databinding.FragmentDetailBinding
-import com.example.notekeeper.fragment.list.NoteListAdapter
 import com.example.notekeeper.utils.Converters
 import com.example.notekeeper.utils.Utils
 import com.example.notekeeper.viewmodel.NoteViewModel
@@ -36,7 +34,7 @@ class DetailFragment : Fragment() {
 
         binding.tvDetailTitle.text = args.detailNote.title
         binding.tvDetailDescription.text = args.detailNote.description
-        binding.tvDetailDate.text = Utils.convertDateToString(date.dayOfMonth,date.monthValue,date.year)
+        binding.tvDetailDate.text = Utils.convertDateToString(date.dayOfMonth,date.monthValue,date.year,requireContext())
 
         mNoteViewModel = ViewModelProvider(this).get(NoteViewModel::class.java)
 
@@ -74,7 +72,7 @@ class DetailFragment : Fragment() {
         alertBuilder.setPositiveButton("Yes") { _, _ ->
             mNoteViewModel.delete(id)
             Toast.makeText(
-                requireContext(), "Succesfully deleted",
+                requireContext(), "Successfully deleted",
                 Toast.LENGTH_LONG
             ).show()
 

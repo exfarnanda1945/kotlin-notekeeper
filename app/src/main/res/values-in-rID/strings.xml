@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Notekeeper</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="add_note">Tambah Note</string>
+    <string name="search">Cari</string>
+    <string name="delete">Hapus</string>
+    <string name="switch_not_important">Tidak Penting</string>
+    <string name="switch_important">Penting</string>
+    <string name="select_date">Pilih Tanggal</string>
+    <string name="title">Judul</string>
+    <string name="hint_description">Ketik sesuatu disini…</string>
+    <string name="january">Januari</string>
+    <string name="february">Februari</string>
+    <string name="march">Maret</string>
+    <string name="april">April</string>
+    <string name="may">Mei</string>
+    <string name="june">Juni</string>
+    <string name="july">Juli</string>
+    <string name="august">Agustus</string>
+    <string name="september">September</string>
+    <string name="october">Oktober</string>
+    <string name="november">November</string>
+    <string name="december">Desember</string>
+    <string name="save">Simpan</string>
+    <string name="update">Update</string>
+</resources>

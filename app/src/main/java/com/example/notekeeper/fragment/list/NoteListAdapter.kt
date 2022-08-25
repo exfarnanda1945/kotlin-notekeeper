@@ -2,11 +2,9 @@ package com.example.notekeeper.fragment.list
 
 import android.content.Context
 import android.graphics.Color
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
@@ -48,7 +46,7 @@ class NoteListAdapter : RecyclerView.Adapter<NoteListAdapter.ViewHolder>() {
         val date = Converters().stringToDate(currentItem.date)
 
         holder.title.text = title
-        holder.date.text = Utils.convertDateToString(date.dayOfMonth,date.monthValue,date.year)
+        holder.date.text = Utils.convertDateToString(date.dayOfMonth,date.monthValue,date.year,holder.itemView.context)
 
         val layoutContainer  = holder.layoutContainer
 

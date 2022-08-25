@@ -2,13 +2,10 @@ package com.example.notekeeper.fragment.add
 
 import android.app.AlertDialog
 import android.app.DatePickerDialog
-import android.content.Context
 import android.os.Bundle
 import android.text.TextUtils
-import android.util.Log
 import android.view.*
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
@@ -54,10 +51,10 @@ class AddFragment : Fragment() {
         binding.swIsImportant.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
                 switchValue = true
-                binding.textSwitch.text = "Important"
+                binding.textSwitch.text = getString(R.string.switch_important)
             } else {
                 switchValue = false
-                binding.textSwitch.text = "Not Important"
+                binding.textSwitch.text = getString(R.string.switch_not_important)
             }
         }
 
@@ -94,12 +91,12 @@ class AddFragment : Fragment() {
 
     private fun initDatePicker() {
         binding.datePickerButton.text =
-            Utils.convertDateToString(dateValue.dayOfMonth, dateValue.monthValue, dateValue.year)
+            Utils.convertDateToString(dateValue.dayOfMonth, dateValue.monthValue, dateValue.year,requireContext())
 
         val dateSetListener: DatePickerDialog.OnDateSetListener =
-            DatePickerDialog.OnDateSetListener() { _, year, month, day ->
+            DatePickerDialog.OnDateSetListener{ _, year, month, day ->
                val monthValue = 1 + month
-                val dateString = Utils.convertDateToString(day, monthValue, year)
+                val dateString = Utils.convertDateToString(day, monthValue, year,requireContext())
                 binding.datePickerButton.text = dateString
                 dateValue = LocalDateTime.of(LocalDate.of(year, monthValue, day), LocalTime.now())
             }
@@ -128,7 +125,7 @@ class AddFragment : Fragment() {
                 date = strDate
             )
             mNoteUserViewMode.create(note)
-            Utils.useToast(requireContext(), "Succesfully Added", Toast.LENGTH_LONG)
+            Utils.useToast(requireContext(), "Successfully Added", Toast.LENGTH_LONG)
             findNavController().navigate(R.id.action_addFragment_to_listFragment)
         } else {
             setError(title, desc)
