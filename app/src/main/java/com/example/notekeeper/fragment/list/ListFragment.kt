@@ -1,21 +1,25 @@
 package com.example.notekeeper.fragment.list
 
 import android.app.AlertDialog
+import android.content.Context
 import android.content.res.ColorStateList
 import android.os.Bundle
 import android.util.Log
 import android.view.*
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
+import androidx.core.content.ContextCompat
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.notekeeper.R
 import com.example.notekeeper.databinding.FragmentListBinding
+import com.example.notekeeper.models.Note
 import com.example.notekeeper.utils.Utils
 import com.example.notekeeper.viewmodel.NoteViewModel
 
@@ -39,7 +43,7 @@ class ListFragment : Fragment() {
         rv.adapter = adapter
         rv.layoutManager = layoutManager
 
-        mNoteViewModel = ViewModelProvider(this).get(NoteViewModel::class.java)
+        mNoteViewModel = ViewModelProvider(this)[NoteViewModel::class.java]
         mNoteViewModel.list.observe(viewLifecycleOwner) {
             adapter.setData(it)
         }
@@ -48,9 +52,9 @@ class ListFragment : Fragment() {
             findNavController().navigate(R.id.action_listFragment_to_addFragment)
         }
         binding.floatBtnAdd.imageTintList =
-            ColorStateList.valueOf(resources.getColor(R.color.white))
+            ColorStateList.valueOf(ContextCompat.getColor(requireContext(),R.color.white))
         binding.floatBtnAdd.backgroundTintList =
-            ColorStateList.valueOf(resources.getColor(R.color.purple_500))
+            ColorStateList.valueOf(ContextCompat.getColor(requireContext(),R.color.purple_500))
 
         val menuHost: MenuHost = requireActivity()
         menuHost.addMenuProvider(object : MenuProvider {
@@ -85,6 +89,13 @@ class ListFragment : Fragment() {
                 }
             }
         }, viewLifecycleOwner, Lifecycle.State.RESUMED)
+
+        adapter.setOnItemCallback(object :NoteListAdapter.OnItemCallback{
+            override fun onItemClicked(value: Note) {
+                val action = ListFragmentDirections.actionListFragmentToDetailFragment(value)
+                view.findNavController().navigate(action)
+            }
+        })
 
         return view
     }

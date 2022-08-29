@@ -18,6 +18,12 @@ import com.example.notekeeper.utils.Utils
 class NoteListAdapter : RecyclerView.Adapter<NoteListAdapter.ViewHolder>() {
     private var noteList: List<Note> = emptyList()
 
+    private lateinit var onItemCallback:OnItemCallback
+
+    fun setOnItemCallback(act:OnItemCallback){
+        this.onItemCallback = act
+    }
+
     private var colors: List<Int> = listOf(
         R.color.smooth_blue,
         R.color.smooth_orange,
@@ -59,14 +65,8 @@ class NoteListAdapter : RecyclerView.Adapter<NoteListAdapter.ViewHolder>() {
 
 
         holder.itemView.setOnClickListener{
-            onClickToDetail(currentItem,holder.itemView)
+            onItemCallback.onItemClicked(noteList[holder.adapterPosition])
         }
-
-    }
-
-    private fun onClickToDetail(item: Note,view:View) {
-        val action = ListFragmentDirections.actionListFragmentToDetailFragment(item)
-        view.findNavController().navigate(action)
 
     }
 
@@ -75,8 +75,8 @@ class NoteListAdapter : RecyclerView.Adapter<NoteListAdapter.ViewHolder>() {
     }
 
     fun setData(noteList: List<Note>) {
-
         this.noteList = noteList
+        notifyDataSetChanged()
     }
 
     private fun getColor(index: Int, ctx: Context): String {
@@ -103,5 +103,9 @@ class NoteListAdapter : RecyclerView.Adapter<NoteListAdapter.ViewHolder>() {
         }
 
         return minHeight
+    }
+
+    interface OnItemCallback{
+        fun onItemClicked(value:Note)
     }
 }
