@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.notekeeper.R
+import com.example.notekeeper.databinding.CustomCardNoteBinding
 import com.example.notekeeper.models.Note
 import com.example.notekeeper.utils.Converters
 import com.example.notekeeper.utils.Utils
@@ -47,15 +48,16 @@ class NoteListAdapter : RecyclerView.Adapter<NoteListAdapter.ViewHolder>() {
         R.color.smooth_teal
     )
 
-    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val title: TextView = itemView.findViewById(R.id.rv_title_item)
-        val date: TextView = itemView.findViewById(R.id.rv_date_item)
-        var layoutContainer: RelativeLayout = itemView.findViewById(R.id.rv_container)
+    class ViewHolder(itemBinding: CustomCardNoteBinding) : RecyclerView.ViewHolder(itemBinding.root) {
+        val title: TextView =itemBinding.rvTitleItem
+        val date: TextView = itemBinding.rvDateItem
+        var layoutContainer: RelativeLayout = itemBinding.rvContainer
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val itemBinding = CustomCardNoteBinding.inflate(LayoutInflater.from(parent.context),parent,false)
         return ViewHolder(
-            LayoutInflater.from(parent.context).inflate(R.layout.custom_card_note, parent, false)
+            itemBinding
         )
     }
 
