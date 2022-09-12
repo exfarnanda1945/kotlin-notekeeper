@@ -1,7 +1,6 @@
 package com.example.notekeeper.fragment.list
 
 import android.app.AlertDialog
-import android.content.Context
 import android.content.res.ColorStateList
 import android.os.Bundle
 import android.util.Log

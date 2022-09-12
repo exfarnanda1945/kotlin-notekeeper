@@ -26,7 +26,7 @@ class DetailFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         _binding = FragmentDetailBinding.inflate(layoutInflater,container,false)
         val view = binding.root
@@ -36,7 +36,7 @@ class DetailFragment : Fragment() {
         binding.tvDetailDescription.text = args.detailNote.description
         binding.tvDetailDate.text = Utils.convertDateToString(date.dayOfMonth,date.monthValue,date.year,requireContext())
 
-        mNoteViewModel = ViewModelProvider(this).get(NoteViewModel::class.java)
+        mNoteViewModel = ViewModelProvider(this)[NoteViewModel::class.java]
 
         val menuHost:MenuHost = requireActivity()
         menuHost.addMenuProvider(object :MenuProvider{

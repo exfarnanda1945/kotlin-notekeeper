@@ -1,6 +1,5 @@
 package com.example.notekeeper.fragment.update
 
-import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.os.Bundle
 import android.text.TextUtils
@@ -29,7 +28,7 @@ class UpdateFragment : Fragment() {
     private val binding get() = _binding!!
     private var isImportant:Boolean = false
     private lateinit var mNoteViewModel: NoteViewModel
-    private lateinit var dateValue:LocalDateTime;
+    private lateinit var dateValue:LocalDateTime
     private lateinit var datePickerDialog: DatePickerDialog
     private val args by navArgs<UpdateFragmentArgs>()
 
@@ -41,7 +40,7 @@ class UpdateFragment : Fragment() {
         _binding = FragmentUpdateBinding.inflate(inflater,container,false)
         val view = binding.root
 
-        mNoteViewModel = ViewModelProvider(this).get(NoteViewModel::class.java)
+        mNoteViewModel = ViewModelProvider(this)[NoteViewModel::class.java]
 
         binding.edtUpdateTitle.setText(args.currentNote.title)
         binding.edtUpdateDescription.setText(args.currentNote.description)
@@ -93,14 +92,14 @@ class UpdateFragment : Fragment() {
     private fun initDatePicker() {
         binding.datePickerUpdateButton.text = Utils.convertDateToString(dateValue.dayOfMonth,dateValue.monthValue,dateValue.year,requireContext())
         val dateListener:DatePickerDialog.OnDateSetListener =
-            DatePickerDialog.OnDateSetListener() { _, year,month, day ->
+            DatePickerDialog.OnDateSetListener { _, year,month, day ->
                 val monthValue  = 1 + month
                 val dateString =Utils.convertDateToString(day,monthValue,year,requireContext())
                 binding.datePickerUpdateButton.text = dateString
                 dateValue = LocalDateTime.of(LocalDate.of(year,monthValue,day), LocalTime.now())
             }
 
-        datePickerDialog = DatePickerDialog(requireContext(),AlertDialog.THEME_HOLO_LIGHT,dateListener,dateValue.year,dateValue.monthValue,dateValue.dayOfMonth)
+        datePickerDialog = DatePickerDialog(requireContext(),android.R.style.Theme_Material_Light_Dialog_Alert,dateListener,dateValue.year,dateValue.monthValue,dateValue.dayOfMonth)
     }
 
     private fun update() {
