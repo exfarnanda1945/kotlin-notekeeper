@@ -8,7 +8,8 @@ import android.view.ViewGroup
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
-import androidx.navigation.findNavController
+import androidx.recyclerview.widget.AsyncListDiffer
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.notekeeper.R
 import com.example.notekeeper.models.Note
@@ -16,11 +17,23 @@ import com.example.notekeeper.utils.Converters
 import com.example.notekeeper.utils.Utils
 
 class NoteListAdapter : RecyclerView.Adapter<NoteListAdapter.ViewHolder>() {
-    private var noteList: List<Note> = emptyList()
 
-    private lateinit var onItemCallback:OnItemCallback
+    private lateinit var onItemCallback: OnItemCallback
 
-    fun setOnItemCallback(act:OnItemCallback){
+    private val diffcallback = object : DiffUtil.ItemCallback<Note>() {
+        override fun areItemsTheSame(oldItem: Note, newItem: Note): Boolean {
+            return oldItem.id == newItem.id
+        }
+
+        override fun areContentsTheSame(oldItem: Note, newItem: Note): Boolean {
+            return oldItem == newItem
+        }
+
+    }
+
+    private val differ = AsyncListDiffer(this, diffcallback)
+
+    fun setOnItemCallback(act: OnItemCallback) {
         this.onItemCallback = act
     }
 
@@ -36,7 +49,7 @@ class NoteListAdapter : RecyclerView.Adapter<NoteListAdapter.ViewHolder>() {
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val title: TextView = itemView.findViewById(R.id.rv_title_item)
-        val date:TextView = itemView.findViewById(R.id.rv_date_item)
+        val date: TextView = itemView.findViewById(R.id.rv_date_item)
         var layoutContainer: RelativeLayout = itemView.findViewById(R.id.rv_container)
     }
 
@@ -47,36 +60,40 @@ class NoteListAdapter : RecyclerView.Adapter<NoteListAdapter.ViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val currentItem= noteList[position]
+        val currentItem = differ.currentList[position]
         val title = currentItem.title
         val date = Converters().stringToDate(currentItem.date)
 
         holder.title.text = title
-        holder.date.text = Utils.convertDateToString(date.dayOfMonth,date.monthValue,date.year,holder.itemView.context)
+        holder.date.text = Utils.convertDateToString(
+            date.dayOfMonth,
+            date.monthValue,
+            date.year,
+            holder.itemView.context
+        )
 
-        val layoutContainer  = holder.layoutContainer
+        val layoutContainer = holder.layoutContainer
 
         // set color programmatically
-        val color = getColor(position,holder.layoutContainer.context)
+        val color = getColor(position, holder.layoutContainer.context)
         layoutContainer.setBackgroundColor(Color.parseColor(color))
 
         // set minimal height programmatically
         layoutContainer.minimumHeight = getMinHeight(position)
 
 
-        holder.itemView.setOnClickListener{
-            onItemCallback.onItemClicked(noteList[holder.adapterPosition])
+        holder.itemView.setOnClickListener {
+            onItemCallback.onItemClicked(differ.currentList[holder.adapterPosition])
         }
 
     }
 
     override fun getItemCount(): Int {
-        return noteList.size
+        return differ.currentList.size
     }
 
     fun setData(noteList: List<Note>) {
-        this.noteList = noteList
-        notifyDataSetChanged()
+        differ.submitList(noteList)
     }
 
     private fun getColor(index: Int, ctx: Context): String {
@@ -85,9 +102,9 @@ class NoteListAdapter : RecyclerView.Adapter<NoteListAdapter.ViewHolder>() {
         return "#${Integer.toHexString(convertColorToInt)}"
     }
 
-    private fun getMinHeight(index:Int):Int{
+    private fun getMinHeight(index: Int): Int {
         var minHeight = 300
-        when(index % 4){
+        when (index % 4) {
             0 -> {
                 minHeight = 350
             }
@@ -105,7 +122,7 @@ class NoteListAdapter : RecyclerView.Adapter<NoteListAdapter.ViewHolder>() {
         return minHeight
     }
 
-    interface OnItemCallback{
-        fun onItemClicked(value:Note)
+    interface OnItemCallback {
+        fun onItemClicked(value: Note)
     }
 }
