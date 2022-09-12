@@ -3,7 +3,7 @@
 // https://developer.android.com/guide/navigation/navigation-pass-data?hl=id
 buildscript {
     dependencies {
-        classpath("androidx.navigation:navigation-safe-args-gradle-plugin:2.5.1")
+        classpath("androidx.navigation:navigation-safe-args-gradle-plugin:2.5.2")
     }
 }
 
